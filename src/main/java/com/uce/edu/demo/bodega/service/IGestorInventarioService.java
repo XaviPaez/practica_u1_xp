@@ -1,9 +1,16 @@
 package com.uce.edu.demo.bodega.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.uce.edu.demo.bodega.modelo.Producto;
 
 public interface IGestorInventarioService {
 
-	public void realizarCalculo(String nombre,BigDecimal precioVenta, BigDecimal precioCompra);
-	public void imprimir(String nombre,BigDecimal precioVenta, BigDecimal precioCompra);
+	public BigDecimal precioVenta(Producto p);
+	public List<Producto> consultar(LocalDateTime fecha);
+	
+
+	
 }

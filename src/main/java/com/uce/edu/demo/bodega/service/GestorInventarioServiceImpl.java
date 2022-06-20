@@ -2,11 +2,12 @@ package com.uce.edu.demo.bodega.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.uce.edu.demo.bodega.modelo.GestorInventario;
 import com.uce.edu.demo.bodega.modelo.Producto;
 import com.uce.edu.demo.bodega.repository.IGestorInventarioRepository;
 
@@ -16,32 +17,35 @@ public class GestorInventarioServiceImpl implements IGestorInventarioService {
 	private IProductoService iProductoService;
 	@Autowired
 	private IGestorInventarioRepository gestorInventarioRepository;
-
+	@Autowired
+	private IInventarioService iInventarioService;
 
 	@Override
-	public void realizarCalculo(String nombre, BigDecimal precioVenta, BigDecimal precioCompra) {
+	public BigDecimal precioVenta(Producto p) {
 		// TODO Auto-generated method stub
-		Producto producto = this.iProductoService.buscarProducto(nombre);
-		BigDecimal pCompra = producto.getPrecioCompra();
-		BigDecimal ganancia = pCompra.multiply(new BigDecimal(0.1));
-		BigDecimal iva = pCompra.multiply(new BigDecimal(0.12));
-		BigDecimal pVenta=pCompra.add(ganancia).add(iva);
-		this.iProductoService.actualizarProducto(producto);
 		
-		GestorInventario gestorInventario= new GestorInventario();
-		gestorInventario.setNombre(nombre);
-		gestorInventario.setFechaIngreso(LocalDateTime.now());
-		gestorInventario.setpVenta(precioVenta);
-		this.gestorInventarioRepository.realizar(gestorInventario);
+		BigDecimal pCompra=p.getPrecioCompra();
+		BigDecimal ganacia=pCompra.multiply(new BigDecimal(10)).divide(new BigDecimal(100));
+		BigDecimal iva=pCompra.multiply(new BigDecimal(12)).divide(new BigDecimal(100));
+		BigDecimal pVenta=pCompra.add(ganacia).add(iva);
 		
+		return pVenta;
 	}
 
 
 	@Override
-	public void imprimir(String nombre, BigDecimal precioVenta, BigDecimal precioCompra) {
+	public List<Producto> consultar(LocalDateTime fecha) {
 		// TODO Auto-generated method stub
-
-
+		List<Producto> lista=this.iInventarioService.buscarProductos();
+		List<Producto> listaF=new ArrayList<>();
+		for(Producto p: lista) {
+			if(p.getFechaIngreso().compareTo(fecha)>0) {
+				p.setPrecioVenta(this.precioVenta(p));
+				listaF.add(p);
+				System.out.println(p.getNombre()+"-"+p.getCantidad()+"-"+ p.getPrecioVenta()+"-"+p.getFechaIngreso());
+			}
+		}
+		return listaF;
 	}
 
 }

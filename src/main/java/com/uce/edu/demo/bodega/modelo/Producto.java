@@ -9,11 +9,12 @@ public class Producto {
 	private BigDecimal precioVenta;
 	private BigDecimal precioCompra;
 	private LocalDateTime fechaIngreso;
+	private int cantidad;
 
 	@Override
 	public String toString() {
 		return "Producto [nombre=" + nombre + ", precioVenta=" + precioVenta + ", precioCompra=" + precioCompra
-				+ ", fechaIngreso=" + fechaIngreso + "]";
+				+ ", fechaIngreso=" + fechaIngreso + ", cantidad=" + cantidad + "]";
 	}
 
 	// SET Y GET
@@ -47,6 +48,14 @@ public class Producto {
 
 	public void setFechaIngreso(LocalDateTime fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
 
 }

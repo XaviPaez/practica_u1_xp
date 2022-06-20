@@ -1,30 +1,39 @@
 package com.uce.edu.demo.bodega.modelo;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 public class Inventario {
 
-	private Producto producto;
-	private LocalDateTime fechaIngreso;
+	private List<Producto> producto;
+	private String bodega;
 	
 	
 	@Override
 	public String toString() {
-		return "Inventario [producto=" + producto + ", fechaIngreso=" + fechaIngreso + "]";
+		return "Inventario [producto=" + producto + ", bodega=" + bodega + "]";
 	}
-	//SET Y GET
-	public Producto getProducto() {
+
+
+	public List<Producto> getProducto() {
 		return producto;
 	}
-	public void setProducto(Producto producto) {
+
+
+	public void setProducto(List<Producto> producto) {
 		this.producto = producto;
 	}
-	public LocalDateTime getFechaIngreso() {
-		return fechaIngreso;
+
+
+	public String getBodega() {
+		return bodega;
 	}
-	public void setFechaIngreso(LocalDateTime fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
+
+
+	public void setBodega(String bodega) {
+		this.bodega = bodega;
 	}
+
+
 	
 	
 }
